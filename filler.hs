@@ -37,16 +37,16 @@ newChar32 = return . random
 newChar64 :: RandomGen g => g -> ST s (Word64,g)
 newChar64 = return . random
 
-#ifdef i386
-newChar :: RandomGen g => g -> ST s (Word32,g)
-newChar = newChar32
-factor = 4
-type WordType = Word32
-#elif x86_64
+#ifdef x86_64_HOST_ARCH
 newChar :: RandomGen g => g -> ST s (Word64,g)
 newChar = newChar64
 factor = 8
 type WordType = Word64
+#else
+newChar :: RandomGen g => g -> ST s (Word32,g)
+newChar = newChar32
+factor = 4
+type WordType = Word32
 #endif
 
 
